@@ -221,6 +221,10 @@ public class Driver {
         return routeList;
     }
 
+    /**
+     * generate the city list which help construct the {@link TrainRoutes}
+     * @return the list of City in this graph
+     */
     private static List<City> generateCities() {
         CityFactory cityFactory = new CityFactory();
         List<City> cities = new ArrayList<>();
@@ -237,6 +241,12 @@ public class Driver {
         return cities;
     }
 
+    /**
+     * put all the routes and cities of given graph into the TrainRoutes object
+     * @param trainRoutes
+     * @param routeList
+     * @param cities
+     */
     private static void constructTrainRoutes(TrainRoutes trainRoutes, List<Route> routeList, List<City> cities) {
         for (Route route : routeList) {
             trainRoutes.addRoute(route);
