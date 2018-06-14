@@ -18,6 +18,11 @@ public class City {
         this.name = name;
     }
 
+    @Override
+    public String toString() {
+        return name + "";
+    }
+
     /**
      * override equals() and hashCode() for City because there are use cases
      * we need to compare different City objects with same name. Under that case,

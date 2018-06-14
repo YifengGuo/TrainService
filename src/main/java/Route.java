@@ -38,6 +38,14 @@ public class Route {
         this.distance = distance;
     }
 
+    @Override
+    public String toString() {
+        return "Route{" +
+                "startCity=" + startCity +
+                ", endCity=" + endCity +
+                ", distance=" + distance +
+                '}';
+    }
 
     /**
      * override equals() and hashCode() for City because there are use cases
