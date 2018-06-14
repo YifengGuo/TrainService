@@ -8,6 +8,7 @@ import java.util.List;
  */
 public class Driver {
     public static void main(String[] args) {
+        // initialize TrainRoutes
         TrainRoutes trainRoutes = new TrainRoutes();
         List<Route> routeList = generateRoutes();
         List<City> cities = generateCities();
