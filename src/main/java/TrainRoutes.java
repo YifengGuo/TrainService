@@ -106,13 +106,24 @@ public class TrainRoutes {
     public List<List<String>> Q6(City start, City end, int maximum) {
         List<List<String>> res = new ArrayList<>();
         // sanity check for city and maximum stops validation
-        if (!cities.contains(start) || !cities.contains(end)) {
-            throw new IllegalArgumentException("City name not found");
+        try {
+            if (!cities.contains(start) || !cities.contains(end)) {
+                throw new IllegalArgumentException();
+            }
+        } catch (IllegalArgumentException e) {
+            System.out.println("City name not found. Please check the input city name again");
+            return res;
         }
 
-        if (maximum <= 0) {
-            throw new IllegalArgumentException("Maximum stops must be positive.");
+        try {
+            if (maximum <= 0) {
+                throw new IllegalArgumentException();
+            }
+        } catch (IllegalArgumentException e) {
+            System.out.println("Maximum stops must be positive.");
+            return res;
         }
+
         List<String> allRoutes = new ArrayList<>();
         for (Map.Entry<String, Integer> entry : trainMap.entrySet()) {
             allRoutes.add(entry.getKey());
@@ -171,12 +182,29 @@ public class TrainRoutes {
     public List<List<String>> Q7(City start, City end, int exactStops) {
         List<List<String>> res = new ArrayList<>();
         // sanity check for city and maximum stops validation
-        if (!cities.contains(start) || !cities.contains(end)) {
-            throw new IllegalArgumentException("City name not found");
+//        if (!cities.contains(start) || !cities.contains(end)) {
+//            throw new IllegalArgumentException("City name not found");
+//        }
+//
+//        if (exactStops <= 0) {
+//            throw new IllegalArgumentException("Exact stops must be positive.");
+//        }
+        try {
+            if (!cities.contains(start) || !cities.contains(end)) {
+                throw new IllegalArgumentException();
+            }
+        } catch (IllegalArgumentException e) {
+            System.out.println("City name not found. Please check the input city name again");
+            return res;
         }
 
-        if (exactStops <= 0) {
-            throw new IllegalArgumentException("Exact stops must be positive.");
+        try {
+            if (exactStops <= 0) {
+                throw new IllegalArgumentException();
+            }
+        } catch (IllegalArgumentException e) {
+            System.out.println("Exact stops must be positive.");
+            return res;
         }
 
         List<String> allRoutes = new ArrayList<>();
@@ -235,12 +263,29 @@ public class TrainRoutes {
     public int Q8Dijkstra(City start, City end) {
         List<List<String>> res = new ArrayList<>();
         // sanity check for city and maximum stops validation
-        if (!cities.contains(start) || !cities.contains(end)) {
-            throw new IllegalArgumentException("City name not found");
+//        if (!cities.contains(start) || !cities.contains(end)) {
+//            throw new IllegalArgumentException("City name not found. Please check the input city name again");
+//        }
+//
+//        if (start.equals(end)) {
+//            throw new IllegalArgumentException("Q8() cannot receive one city, invoke Q9() instead.");
+//        }
+        try {
+            if (!cities.contains(start) || !cities.contains(end)) {
+                throw new IllegalArgumentException();
+            }
+        } catch (IllegalArgumentException e) {
+            System.out.println("City name not found. Please check the input city name again");
+            return -1;
         }
 
-        if (start.equals(end)) {
-            throw new IllegalArgumentException("Q8() cannot receive one city, invoke Q9() instead.");
+        try {
+            if (start.equals(end)) {
+                throw new IllegalArgumentException();
+            }
+        } catch (IllegalArgumentException e) {
+            System.out.println("Q8() cannot receive one city, please invoke Q9() instead.");
+            return -1;
         }
         // initialize all cities' distance to start city as Integer.MAX_VALUE
         Map<String, Integer> distanceToStart = new HashMap<>();
@@ -304,8 +349,16 @@ public class TrainRoutes {
      */
     public int Q9(City start, City end) {
         // sanity check for city and maximum stops validation
-        if (!cities.contains(start) || !cities.contains(end)) {
-            throw new IllegalArgumentException("City name not found");
+//        if (!cities.contains(start) || !cities.contains(end)) {
+//            throw new IllegalArgumentException("City name not found");
+//        }
+        try {
+            if (!cities.contains(start) || !cities.contains(end)) {
+                throw new IllegalArgumentException();
+            }
+        } catch (IllegalArgumentException e) {
+            System.out.println("City name not found. Please check the input city name again");
+            return -1;
         }
         Set<String> visited = new HashSet<>();
         List<String> plan = new ArrayList<>();
@@ -359,12 +412,30 @@ public class TrainRoutes {
     public List<List<String>> Q10(City start, City end, int maxDistance) {
         List<List<String>> res = new ArrayList<>();
         // sanity check for city and maximum stops validation
-        if (!cities.contains(start) || !cities.contains(end)) {
-            throw new IllegalArgumentException("City name not found");
+//        if (!cities.contains(start) || !cities.contains(end)) {
+//            throw new IllegalArgumentException("City name not found");
+//        }
+//        if (maxDistance <= 0) {
+//            throw new IllegalArgumentException("Max distance must be positive.");
+//        }
+        try {
+            if (!cities.contains(start) || !cities.contains(end)) {
+                throw new IllegalArgumentException();
+            }
+        } catch (IllegalArgumentException e) {
+            System.out.println("City name not found. Please check the input city name again");
+            return res;
         }
-        if (maxDistance <= 0) {
-            throw new IllegalArgumentException("Max distance must be positive.");
+
+        try {
+            if (maxDistance <= 0) {
+                throw new IllegalArgumentException();
+            }
+        } catch (IllegalArgumentException e) {
+            System.out.println("Exact stops must be positive.");
+            return res;
         }
+
         List<String> plan = new ArrayList<>();
 
         dfs4(res, plan, end.getName(), start.getName(), 0, maxDistance);

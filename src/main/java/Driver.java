@@ -79,24 +79,24 @@ public class Driver {
         trainRoutes.printListOfList(res_Q6);
 
         // test case 3 for Q6: non-existed city name will throw IllegalArgumentException
-//        System.out.println();
-//        start_Q6 = new City("K"); // non-existed city name
-//        end_Q6 = E;
-//        maximumStop_Q6 = 4;
-//        res_Q6 = trainRoutes.Q6(start_Q6, end_Q6, maximumStop_Q6);
-//        System.out.println("The number of trips starting at "+ start_Q6 +" and ending at " + end_Q6 +
-//                " with a maximum of " + maximumStop_Q6 + " stops is " + trainRoutes.getCountOfRoutes(res_Q6));
-//        trainRoutes.printListOfList(res_Q6);
+        System.out.println();
+        start_Q6 = new City("K"); // non-existed city name
+        end_Q6 = E;
+        maximumStop_Q6 = 4;
+        res_Q6 = trainRoutes.Q6(start_Q6, end_Q6, maximumStop_Q6);
+        System.out.println("The number of trips starting at "+ start_Q6 +" and ending at " + end_Q6 +
+                " with a maximum of " + maximumStop_Q6 + " stops is " + trainRoutes.getCountOfRoutes(res_Q6));
+        trainRoutes.printListOfList(res_Q6);
 
-        // test case 4 for Q6: negative max maximum stops will throw IllegalArgumentException
-//        System.out.println();
-//        start_Q6 = A;
-//        end_Q6 = E;
-//        maximumStop_Q6 = -1; // negative invalid maximum stops
-//        res_Q6 = trainRoutes.Q6(start_Q6, end_Q6, maximumStop_Q6);
-//        System.out.println("The number of trips starting at "+ start_Q6 +" and ending at " + end_Q6 +
-//                " with a maximum of " + maximumStop_Q6 + " stops is " + trainRoutes.getCountOfRoutes(res_Q6));
-//        trainRoutes.printListOfList(res_Q6);
+         // test case 4 for Q6: negative max maximum stops will throw IllegalArgumentException
+        System.out.println();
+        start_Q6 = A;
+        end_Q6 = E;
+        maximumStop_Q6 = -1; // negative invalid maximum stops
+        res_Q6 = trainRoutes.Q6(start_Q6, end_Q6, maximumStop_Q6);
+        System.out.println("The number of trips starting at "+ start_Q6 +" and ending at " + end_Q6 +
+                " with a maximum of " + maximumStop_Q6 + " stops is " + trainRoutes.getCountOfRoutes(res_Q6));
+        trainRoutes.printListOfList(res_Q6);
         System.out.println("\n*********************** Question 6 ***********************\n");
 
 //        // test for Q7
@@ -138,11 +138,11 @@ public class Driver {
                 start_Q8 + " to " +  end_Q8 + " is " + minDis_Q8);
 
         // test case 3 for Q8: if input two cities are same one which cannot be handled by Dijkstra's algorithm
-//        start_Q8 = E;
-//        end_Q8 = E;
-//        minDis = trainRoutes.Q8Dijkstra(start_Q8, end_Q8);
-//        System.out.println("The length of the shortest route (in terms of distance to travel) from " +
-//                start_Q8 + " to " +  end_Q8 + " is " + minDis);
+        start_Q8 = E;
+        end_Q8 = E;
+        minDis_Q8 = trainRoutes.Q8Dijkstra(start_Q8, end_Q8);
+        System.out.println("The length of the shortest route (in terms of distance to travel) from " +
+                start_Q8 + " to " +  end_Q8 + " is " + minDis_Q8);
         System.out.println("\n*********************** Question 8 ***********************\n");
 
         System.out.println("*********************** Question 9 ***********************\n");
