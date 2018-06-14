@@ -4,16 +4,16 @@
 
 #### Summary of the project
 
-The TrainService System is constructed by 3 core objects which are TrainRoutes, City and Route. And the system also supplies two factories to create City and Route and a customized exception for handling some usecase. 
+The TrainService System is constructed by 3 core objects which are TrainRoutes, City and Route. And the system also supplies two factories to create City and Route and a customized exception for handling some usecase.
 
 Considering that there can be multiple TrainRoutes objects in the possible future system, so I did not make it as a Singleton.
 
-The reason I extract City and Route out from the TrainRoutes is simply decrease the coupling and this may be helpful for future extension on City and Route themselves even though the practical advantage did not reveal so far.
+The reason I extract City and Route out from the TrainRoutes is simply to decrease the coupling and this may be helpful for future extension on City and Route themselves even though the practical advantage did not reveal so far.
 
 #### TrainRoutes Design Idea
 
 * Fields:
-  * Map<String, Integer> trainMap. The map is to record the Route in String format like "AE" and the reason the key is String it to simplify the calculation.
+  * Map<String, Integer> trainMap. The map is to record the Route in String format like "AE" and the reason the key is String is to simplify the calculation.
   * Set<City> cities is to record all the cities in the given graph
 * APIs:
   * addRoute() and addCity() are to add new Route and new City to this TrainRoutes object.
@@ -36,13 +36,13 @@ Please run the project under Java version 7 environment or higher.
 
 After setting up the project in your local IDE or Java Runtime Environment, check out there is a Driver.java. And simply run the main method in this class in IDE or compile all the java files under the /src directory and run java Driver.java on your terminal.
 
-The data of this graph and routes are stored in the /raw_data directory. If you want to add some other cities or routes, please directly append them at the end of both files. The city_list.txt contains city names on each line and graph.txt contains routes on each line which is separated by "\t".
+The data of this graph and routes are stored in the /raw_data directory. If you want to add some other cities or routes, please directly append them at the end of both files. The city_list.txt contains city names on each line and graph.txt contains routes on each line where each element is separated by "\t".
 
 In the Driver class, generateRoutes(), generateCities and constructTrainRoutes() are to initialize the TrainRoutes object. And the rest part of main() is for testing.
 
 ### About Testing
 
-* For Q1-5, I designed 10 different test cases, valid or invalid, to check both the correctnes of the algorithm, the exception handling and the correctness of regular expression match.
+* For Q1-5, I designed 10 different test cases, valid or invalid, to check both the correctness of the algorithm, the exception handling and the correctness of regular expression match.
 * For Q6 - Q10: In Q6, I designed 4 test cases including two valid input and one non-existed city input and one invalid numeric input. For each method will handle this two kinds of exception first, so in other question test, I just skip this kind of exception test. And other questions tests are similar.
 * About exception handling, at first I just throw the exception and the program will stop immediately. For the consistency of the test program in Driver, instead, I convert all the exceptions from throwing to handing in the method. So if there is any exception handled by the method, some message will be printed on the console, but you could possibly see some redundant sentences printed, please just ignore them.
 
