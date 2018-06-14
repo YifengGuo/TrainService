@@ -1,8 +1,7 @@
 package main.java;
 
-import sun.tools.jconsole.MaximizableInternalFrame;
-
 import java.util.*;
+import java.util.regex.Pattern;
 
 /**
  * Created by guoyifeng on 6/12/18.
@@ -39,6 +38,14 @@ public class TrainRoutes {
      * @return the total distance accumulated by each two-stop distance
      */
     public String calculcateDistance(String route) {
+        // check input format validation
+        try {
+            if (!route.matches("^(\\w\\-)+\\w$")) {
+                throw new IllegalArgumentException();
+            }
+        } catch (IllegalArgumentException e) {
+            System.out.println("For Route "+ route +" please input route in format like X-X-X");
+        }
         int total = 0;
         boolean hasException = false;
         List<String> twoGramRoutes = getTwoGram(route);
@@ -154,6 +161,13 @@ public class TrainRoutes {
         }
     }
 
+    /**
+     * This method is a general implementation for Question 7
+     * @param start start City
+     * @param end end City
+     * @param exactStops exact count of requested stops
+     * @return The list which contains all possible routes given the constraints <br>
+     */
     public List<List<String>> Q7(City start, City end, int exactStops) {
         List<List<String>> res = new ArrayList<>();
         // sanity check for city and maximum stops validation
@@ -175,6 +189,18 @@ public class TrainRoutes {
         return res;
     }
 
+    /**
+     * helper depth first search algorithm for {@link #Q7(City, City, int)}
+     * @param res result list which contains every valid route info
+     * @param plan list of String for current depth first recursive search
+     * @param allRoutes all the routes in this system
+     * @param start start City
+     * @param end end City
+     * @param cur current traversed city
+     * @param prev previous traversed city
+     * @param exactStops exact count of requested stops
+     * @param level the depth of recursion tree, use it instead of visited to make dfs not stop too early
+     */
     private void dfs2(List<List<String>> res, List<String> plan, List<String> allRoutes, String start,
                       String end, String cur, String prev, int exactStops, int level) {
         // base case
@@ -211,6 +237,10 @@ public class TrainRoutes {
         // sanity check for city and maximum stops validation
         if (!cities.contains(start) || !cities.contains(end)) {
             throw new IllegalArgumentException("City name not found");
+        }
+
+        if (start.equals(end)) {
+            throw new IllegalArgumentException("Q8() cannot receive one city, invoke Q9() instead.");
         }
         // initialize all cities' distance to start city as Integer.MAX_VALUE
         Map<String, Integer> distanceToStart = new HashMap<>();
@@ -264,7 +294,7 @@ public class TrainRoutes {
     }
 
     /**
-     * This method is a general implementation for Question 8. Input two identical City object and return
+     * This method is a general implementation for Question 9. Input two identical City object and return
      * the shortest distance to get back to the original city. <br>
      * This method is kind of complement for the Dijkstra's algorithm which cannot work when input cities are pointing
      * to the same one. <br>
@@ -318,6 +348,14 @@ public class TrainRoutes {
         }
     }
 
+    /**
+     * This method is a general implementation for Question 10. Input two identical City object and a maximum distance
+     * limit, return all the possible routes <br>
+     * @param start start City
+     * @param end end City
+     * @param maxDistance requested maximum distance
+     * @return all the possible routes which satisfy the constraints
+     */
     public List<List<String>> Q10(City start, City end, int maxDistance) {
         List<List<String>> res = new ArrayList<>();
         // sanity check for city and maximum stops validation
@@ -333,6 +371,15 @@ public class TrainRoutes {
         return res;
     }
 
+    /**
+     * helper depth first search algorithm for {@link #Q10(City, City, int)}
+     * @param res result list
+     * @param plan list of String for current depth first recursive search
+     * @param end end City
+     * @param cur current traversed city
+     * @param dis current path's distance
+     * @param maxDistance requested maximum distance
+     */
     private void dfs4(List<List<String>> res, List<String> plan, String end, String cur, int dis, int maxDistance) {
         // base case
         if (plan.size() > 1 && cur.equals(end) && dis < maxDistance) {
@@ -350,5 +397,21 @@ public class TrainRoutes {
                 plan.remove(plan.size() - 1);
             }
         }
+    }
+
+    // helper function for printing the result list
+    public void printListOfList(List<List<String>> res) {
+        System.out.println("All possible routes for this question input are: ");
+        for (List<String> list : res) {
+            for (String s : list) {
+                System.out.print(s + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    // get the count of result routes in the result list
+    public int getCountOfRoutes(List<List<String>> res) {
+        return res.size();
     }
 }
