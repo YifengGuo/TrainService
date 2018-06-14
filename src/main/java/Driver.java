@@ -9,6 +9,7 @@ import java.util.List;
 /**
  * Created by guoyifeng on 6/12/18.
  */
+@SuppressWarnings("Duplicates")
 public class Driver {
     public static void main(String[] args) {
         // initialize TrainRoutes
@@ -260,17 +261,29 @@ public class Driver {
      */
     private static List<City> generateCities() {
         CityFactory cityFactory = new CityFactory();
+
+        // read City list from city_list.txt
         List<City> cities = new ArrayList<>();
-        City A = cityFactory.createCity("A");
-        City B = cityFactory.createCity("B");
-        City C = cityFactory.createCity("C");
-        City D = cityFactory.createCity("D");
-        City E = cityFactory.createCity("E");
-        cities.add(A);
-        cities.add(B);
-        cities.add(C);
-        cities.add(D);
-        cities.add(E);
+        try {
+            BufferedReader br1 = new BufferedReader(new FileReader("src/main/raw_data/city_list.txt"));
+            String cityLine;
+            while ((cityLine = br1.readLine()) != null) {
+                cities.add(cityFactory.createCity(cityLine.trim()));
+            }
+            br1.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+//        City A = cityFactory.createCity("A");
+//        City B = cityFactory.createCity("B");
+//        City C = cityFactory.createCity("C");
+//        City D = cityFactory.createCity("D");
+//        City E = cityFactory.createCity("E");
+//        cities.add(A);
+//        cities.add(B);
+//        cities.add(C);
+//        cities.add(D);
+//        cities.add(E);
         return cities;
     }
 
