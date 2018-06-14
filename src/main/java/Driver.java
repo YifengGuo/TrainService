@@ -49,10 +49,28 @@ public class Driver {
 //        }
 
         // test for Q8
-        City start = new City("E");
-        City end = new City("D");
-        int minDis = trainRoutes.Q8Dijkstra(start, end);
-        System.out.print(minDis);
+//        City start = new City("E");
+//        City end = new City("D");
+//        int minDis = trainRoutes.Q8Dijkstra(start, end);
+//        System.out.print(minDis);
+
+        // test for Q9
+//        City start = new City("B");
+//        City end = new City("B");
+//        int minDis = trainRoutes.Q9(start, end);
+//        System.out.print(minDis);
+
+        // test for Q10
+        City start = new City("C");
+        City end = new City("C");
+        List<List<String>> res = trainRoutes.Q10(start, end, 30);
+        for (List<String> list : res) {
+            for (String s : list) {
+                System.out.print(s + " ");
+            }
+            System.out.print("\n");
+        }
+
     }
 
     /**

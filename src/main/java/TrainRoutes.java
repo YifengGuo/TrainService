@@ -1,5 +1,7 @@
 package main.java;
 
+import sun.tools.jconsole.MaximizableInternalFrame;
+
 import java.util.*;
 
 /**
@@ -51,7 +53,7 @@ public class TrainRoutes {
                 total += trainMap.get(twoGramRoute);
             }
         }
-        return hasException ?  "NO SUCH ROUTE" : String.valueOf(total);
+        return hasException ? "NO SUCH ROUTE" : String.valueOf(total);
     }
 
     /**
@@ -98,11 +100,11 @@ public class TrainRoutes {
         List<List<String>> res = new ArrayList<>();
         // sanity check for city and maximum stops validation
         if (!cities.contains(start) || !cities.contains(end)) {
-            throw new IllegalArgumentException("city name not found");
+            throw new IllegalArgumentException("City name not found");
         }
 
         if (maximum <= 0) {
-            throw new IllegalArgumentException("maximum stops must be positive.");
+            throw new IllegalArgumentException("Maximum stops must be positive.");
         }
         List<String> allRoutes = new ArrayList<>();
         for (Map.Entry<String, Integer> entry : trainMap.entrySet()) {
@@ -116,7 +118,7 @@ public class TrainRoutes {
     }
 
     /**
-     * Helper depth first method for {@link #Q6(City, City, int)}
+     * Helper depth first search algorithm for {@link #Q6(City, City, int)}
      * @param res result list
      * @param plan list of String for current depth first recursive search
      * @param allRoutes all the routes in this system
@@ -156,11 +158,11 @@ public class TrainRoutes {
         List<List<String>> res = new ArrayList<>();
         // sanity check for city and maximum stops validation
         if (!cities.contains(start) || !cities.contains(end)) {
-            throw new IllegalArgumentException("city name not found");
+            throw new IllegalArgumentException("City name not found");
         }
 
         if (exactStops <= 0) {
-            throw new IllegalArgumentException("exact stops must be positive.");
+            throw new IllegalArgumentException("Exact stops must be positive.");
         }
 
         List<String> allRoutes = new ArrayList<>();
@@ -199,7 +201,7 @@ public class TrainRoutes {
     /**
      * This method is a general implementation for Question 8. Input two City object and return the
      * shortest distance between it
-     * The method is based on Dijkstra's greedy algorithm on the graph
+     * The method is based on Dijkstra's greedy path finding algorithm on the graph
      * @param start City start
      * @param end City end
      * @return the shortest distance between two cities
@@ -208,7 +210,7 @@ public class TrainRoutes {
         List<List<String>> res = new ArrayList<>();
         // sanity check for city and maximum stops validation
         if (!cities.contains(start) || !cities.contains(end)) {
-            throw new IllegalArgumentException("city name not found");
+            throw new IllegalArgumentException("City name not found");
         }
         // initialize all cities' distance to start city as Integer.MAX_VALUE
         Map<String, Integer> distanceToStart = new HashMap<>();
@@ -236,15 +238,21 @@ public class TrainRoutes {
                 int intervalDistance = trainMap.get(cur + "" + adjacentCity) != null ?
                         trainMap.get(cur + "" + adjacentCity) : Integer.MAX_VALUE / 2; // avoid numeric overflow
                 // System.out.println(intervalDistance);
+                // update shorter path info for current adjacent city if possible
                 if (distanceToStart.get(adjacentCity) > distanceToStart.get(cur) + intervalDistance) {
                     distanceToStart.put(adjacentCity, distanceToStart.get(cur) + intervalDistance);
-                    pq.offer(adjacentCity);
+                    pq.offer(adjacentCity); // this city will have priority to be traversed on next iteration
                 }
             }
         }
         return Integer.MAX_VALUE; // cannot find valid path
     }
 
+    /**
+     * helper method for find all adjacent cities of the given city
+     * @param start
+     * @return
+     */
     private List<String> getAdjacentCities(String start) {
         List<String> res = new ArrayList<>();
         for (Map.Entry<String, Integer> entry : trainMap.entrySet()) {
@@ -253,5 +261,94 @@ public class TrainRoutes {
             }
         }
         return res;
+    }
+
+    /**
+     * This method is a general implementation for Question 8. Input two identical City object and return
+     * the shortest distance to get back to the original city. <br>
+     * This method is kind of complement for the Dijkstra's algorithm which cannot work when input cities are pointing
+     * to the same one. <br>
+     * @param start start city
+     * @param end identical end city
+     * @return shortest distance to get back. If impossible to get back, return Integer.MAX_VALUE
+     */
+    public int Q9(City start, City end) {
+        // sanity check for city and maximum stops validation
+        if (!cities.contains(start) || !cities.contains(end)) {
+            throw new IllegalArgumentException("City name not found");
+        }
+        Set<String> visited = new HashSet<>();
+        List<String> plan = new ArrayList<>();
+        int[] minDis = new int[1];
+        minDis[0] = Integer.MAX_VALUE; // initialize minimal distance
+        boolean secondVisit = false;
+        dfs3(plan, end.getName(), visited, minDis, start.getName(),0, secondVisit);
+        return minDis[0];
+    }
+
+    /**
+     * helper depth first search algorithm for {@link #Q9(City, City)}
+     * @param plan path info
+     * @param end end city name
+     * @param visited deduplicate visited entry
+     * @param minDis a one-size array to store shortest path value
+     * @param cur current traversed city
+     * @param dis current path's distance
+     * @param secondVisit to guarantee first time the dfs would not stop
+     */
+    private void dfs3(List<String> plan, String end, Set<String> visited,
+                      int[] minDis, String cur,int dis, boolean secondVisit) {
+        // base case
+        if (cur.equals(end) && minDis[0] >= dis && secondVisit) {
+            minDis[0] = dis;
+            return;
+        }
+        secondVisit = true;
+        List<String> adjacentCities = getAdjacentCities(cur);
+        for (String adjacentCity : adjacentCities) {
+            if (!visited.contains(adjacentCity)) {
+                visited.add(adjacentCity);
+                plan.add(cur);
+                dis += trainMap.get(cur + "" + adjacentCity);
+                dfs3(plan, end, visited, minDis, adjacentCity, dis, secondVisit);
+                dis -= trainMap.get(cur + "" + adjacentCity);
+                plan.remove(plan.size() - 1);
+                visited.remove(adjacentCity);
+            }
+        }
+    }
+
+    public List<List<String>> Q10(City start, City end, int maxDistance) {
+        List<List<String>> res = new ArrayList<>();
+        // sanity check for city and maximum stops validation
+        if (!cities.contains(start) || !cities.contains(end)) {
+            throw new IllegalArgumentException("City name not found");
+        }
+        if (maxDistance <= 0) {
+            throw new IllegalArgumentException("Max distance must be positive.");
+        }
+        List<String> plan = new ArrayList<>();
+
+        dfs4(res, plan, end.getName(), start.getName(), 0, maxDistance);
+        return res;
+    }
+
+    private void dfs4(List<List<String>> res, List<String> plan, String end, String cur, int dis, int maxDistance) {
+        // base case
+        if (plan.size() > 1 && cur.equals(end) && dis < maxDistance) {
+            plan.add(cur);
+            res.add(new ArrayList<>(plan));
+            plan.remove(plan.size() - 1);
+            //return; // do not return to make dfs continue
+        }
+
+        List<String> adjacentCities = getAdjacentCities(cur);
+        for (String adjacentCity : adjacentCities) {
+            if (dis < maxDistance) {
+                plan.add(cur);
+                dfs4(res, plan, end, adjacentCity, dis + trainMap.get(cur + "" + adjacentCity), maxDistance);
+                plan.remove(plan.size() - 1);
+            }
+        }
     }
 }
