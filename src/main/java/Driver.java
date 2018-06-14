@@ -1,9 +1,7 @@
 package main.java;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by guoyifeng on 6/12/18.
@@ -15,61 +13,176 @@ public class Driver {
         List<City> cities = generateCities();
         constructTrainRoutes(trainRoutes, routeList, cities);
 
-        // test for map
+        // test for map initialization
 //        for (Map.Entry entry : trainRoutes.getTrainMap().entrySet()) {
 //            System.out.println(entry.getKey() + " " + entry.getValue());
 //        }
+
         // test for Q1 - Q5
-//        String route1 = "A-B-C";
-//        String dis1 = trainRoutes.calculcateDistance(route1);
-//        System.out.print(dis1);
+        System.out.println("*********************** Question 1 - 5 ***********************\n");
+        String route1 = "A-B-C";
+        String route2 = "A-D";
+        String route3 = "A-D-C";
+        String route4 = "A-E-B-C-D";
+        String route5 = "A-E-D";
+        // test for invalid route format
+        String route6 = "A-";
+        String route7 = "AA";
+        String route8 = "A--A";
+        String route9 = "AA--";
+        String route10 = "-A";
+        String dis1 = trainRoutes.calculcateDistance(route1);
+        String dis2 = trainRoutes.calculcateDistance(route2);
+        String dis3 = trainRoutes.calculcateDistance(route3);
+        String dis4 = trainRoutes.calculcateDistance(route4);
+        String dis5 = trainRoutes.calculcateDistance(route5);
+        String dis6 = trainRoutes.calculcateDistance(route6);
+        String dis7 = trainRoutes.calculcateDistance(route7);
+        String dis8 = trainRoutes.calculcateDistance(route8);
+        String dis9 = trainRoutes.calculcateDistance(route9);
+        String dis10 = trainRoutes.calculcateDistance(route10);
+        System.out.println("The distance of the route " + route1 + " is " + dis1);
+        System.out.println("The distance of the route " + route2 + " is " + dis2);
+        System.out.println("The distance of the route " + route3 + " is " + dis3);
+        System.out.println("The distance of the route " + route4 + " is " + dis4);
+        System.out.println("The distance of the route " + route5 + " is " + dis5);
+        System.out.println("\n*********************** Question 1 - 5 ***********************\n");
+
+        // For convenience, here I will create all City objects in this graph once
+        CityFactory cityFactory = new CityFactory();
+        City A = cityFactory.createCity("A");
+        City B = cityFactory.createCity("B");
+        City C = cityFactory.createCity("C");
+        City D = cityFactory.createCity("D");
+        City E = cityFactory.createCity("E");
 
         // test for Q6
-//        City start = new City("A");
-//        City end = new City("C");
-//
-//        List<List<String>> res = trainRoutes.Q7(start, end, 4);
-//        for (List<String> list : res) {
-//            for (String s : list) {
-//                System.out.print(s + " ");
-//            }
-//            System.out.print("\n");
-//        }
+        System.out.println("*********************** Question 6 ***********************\n");
+
+        // test case 1 for Q6
+        City start_Q6 = C;
+        City end_Q6 = C;
+        int maximumStop_Q6 = 3;
+        List<List<String>> res_Q6 = trainRoutes.Q6(start_Q6, end_Q6, maximumStop_Q6);
+        System.out.println("The number of trips starting at "+ start_Q6 +" and ending at " + end_Q6 +
+                " with a maximum of " + maximumStop_Q6 + " stops is " + trainRoutes.getCountOfRoutes(res_Q6));
+        trainRoutes.printListOfList(res_Q6);
+
+        // test case 2 for Q6
+        System.out.println();
+        start_Q6 = A;
+        end_Q6 = E;
+        maximumStop_Q6 = 4;
+        res_Q6 = trainRoutes.Q6(start_Q6, end_Q6, maximumStop_Q6);
+        System.out.println("The number of trips starting at "+ start_Q6 +" and ending at " + end_Q6 +
+                " with a maximum of " + maximumStop_Q6 + " stops is " + trainRoutes.getCountOfRoutes(res_Q6));
+        trainRoutes.printListOfList(res_Q6);
+
+        // test case 3 for Q6: non-existed city name will throw IllegalArgumentException
+//        System.out.println();
+//        start_Q6 = new City("K"); // non-existed city name
+//        end_Q6 = E;
+//        maximumStop_Q6 = 4;
+//        res_Q6 = trainRoutes.Q6(start_Q6, end_Q6, maximumStop_Q6);
+//        System.out.println("The number of trips starting at "+ start_Q6 +" and ending at " + end_Q6 +
+//                " with a maximum of " + maximumStop_Q6 + " stops is " + trainRoutes.getCountOfRoutes(res_Q6));
+//        trainRoutes.printListOfList(res_Q6);
+
+        // test case 4 for Q6: negative max maximum stops will throw IllegalArgumentException
+//        System.out.println();
+//        start_Q6 = A;
+//        end_Q6 = E;
+//        maximumStop_Q6 = -1; // negative invalid maximum stops
+//        res_Q6 = trainRoutes.Q6(start_Q6, end_Q6, maximumStop_Q6);
+//        System.out.println("The number of trips starting at "+ start_Q6 +" and ending at " + end_Q6 +
+//                " with a maximum of " + maximumStop_Q6 + " stops is " + trainRoutes.getCountOfRoutes(res_Q6));
+//        trainRoutes.printListOfList(res_Q6);
+        System.out.println("\n*********************** Question 6 ***********************\n");
 
 //        // test for Q7
-//        City start = new City("A");
-//        City end = new City("C");
-//
-//        List<List<String>> res = trainRoutes.Q7(start, end, 4);
-//        for (List<String> list : res) {
-//            for (String s : list) {
-//                System.out.print(s + " ");
-//            }
-//            System.out.print("\n");
-//        }
+        System.out.println("*********************** Question 7 ***********************\n");
+        // test case 1 for Q7
+        City start_Q7 = A;
+        City end_Q7 = C;
+        int exactStops_Q7 = 4;
+        List<List<String>> res_Q7 = trainRoutes.Q7(start_Q7, end_Q7, exactStops_Q7);
+        System.out.println("The number of trips starting at "+ start_Q7 +" and ending at " + end_Q7 +
+                " with exact " + exactStops_Q7 + " stops is " + trainRoutes.getCountOfRoutes(res_Q7));
+        trainRoutes.printListOfList(res_Q7);
+
+        // test case 2 for Q7
+        System.out.println();
+        start_Q7 = B; // no such route can satisfy that with one stop from B to E
+        end_Q7 = E;
+        exactStops_Q7 = 1;
+        res_Q7 = trainRoutes.Q7(start_Q7, end_Q7, exactStops_Q7);
+        System.out.println("The number of trips starting at "+ start_Q7 +" and ending at " + end_Q7 +
+                " with exact " + exactStops_Q7 + " stops is " + trainRoutes.getCountOfRoutes(res_Q7));
+        trainRoutes.printListOfList(res_Q7);
+        System.out.println("\n*********************** Question 7 ***********************\n");
 
         // test for Q8
-//        City start = new City("E");
-//        City end = new City("D");
-//        int minDis = trainRoutes.Q8Dijkstra(start, end);
-//        System.out.print(minDis);
+        System.out.println("*********************** Question 8 ***********************\n");
+        // test case 1 for Q8
+        City start_Q8 = A;
+        City end_Q8 = C;
+        int minDis_Q8 = trainRoutes.Q8Dijkstra(start_Q8, end_Q8);
+        System.out.println("The length of the shortest route (in terms of distance to travel) from " +
+                start_Q8 + " to " +  end_Q8 + " is " + minDis_Q8);
 
-        // test for Q9
-//        City start = new City("B");
-//        City end = new City("B");
-//        int minDis = trainRoutes.Q9(start, end);
-//        System.out.print(minDis);
+        // test case 2 for Q8
+        start_Q8 = E;
+        end_Q8 = D;
+        minDis_Q8 = trainRoutes.Q8Dijkstra(start_Q8, end_Q8);
+        System.out.println("The length of the shortest route (in terms of distance to travel) from " +
+                start_Q8 + " to " +  end_Q8 + " is " + minDis_Q8);
 
-        // test for Q10
-        City start = new City("C");
-        City end = new City("C");
-        List<List<String>> res = trainRoutes.Q10(start, end, 30);
-        for (List<String> list : res) {
-            for (String s : list) {
-                System.out.print(s + " ");
-            }
-            System.out.print("\n");
-        }
+        // test case 3 for Q8: if input two cities are same one which cannot be handled by Dijkstra's algorithm
+//        start_Q8 = E;
+//        end_Q8 = E;
+//        minDis = trainRoutes.Q8Dijkstra(start_Q8, end_Q8);
+//        System.out.println("The length of the shortest route (in terms of distance to travel) from " +
+//                start_Q8 + " to " +  end_Q8 + " is " + minDis);
+        System.out.println("\n*********************** Question 8 ***********************\n");
+
+        System.out.println("*********************** Question 9 ***********************\n");
+        // test case 1 for Q9
+        City start_Q9 = new City("B");
+        City end_Q9 = new City("B");
+        int minDis_Q9 = trainRoutes.Q9(start_Q9, end_Q9);
+        System.out.println("The length of the shortest route (in terms of distance to travel) from " +
+                start_Q9 + " to " +  end_Q9 + " is " + minDis_Q9);
+
+        // test case 2 for Q9
+        System.out.println();
+        start_Q9 = new City("A");
+        end_Q9 = new City("C");
+        minDis_Q9 = trainRoutes.Q9(start_Q9, end_Q9);
+        System.out.println("The length of the shortest route (in terms of distance to travel) from " +
+                start_Q9 + " to " +  end_Q9 + " is " + minDis_Q9);
+        System.out.println("\n*********************** Question 9 ***********************\n");
+
+        System.out.println("*********************** Question 10 ***********************\n");
+        // test case 1 for Q10
+        City start_Q10 = C;
+        City end_Q10 = C;
+        int maxDistance_Q10 = 30;
+        List<List<String>> res_Q10 = trainRoutes.Q10(start_Q10, end_Q10, maxDistance_Q10);
+        System.out.println("The number of different routes from " + start_Q10 + " to " + end_Q10 +
+                " with a distance of less than "+ maxDistance_Q10 + " is " + trainRoutes.getCountOfRoutes(res_Q10));
+        trainRoutes.printListOfList(res_Q10);
+
+        // test case 2 for Q10
+        System.out.println();
+        start_Q10 = A;
+        end_Q10 = D;
+        maxDistance_Q10 = 60;
+        res_Q10 = trainRoutes.Q10(start_Q10, end_Q10, maxDistance_Q10);
+        System.out.println("The number of different routes from " + start_Q10 + " to " + end_Q10 +
+                " with a distance of less than "+ maxDistance_Q10 + " is " + trainRoutes.getCountOfRoutes(res_Q10));
+        trainRoutes.printListOfList(res_Q10);
+
+        System.out.println("\n*********************** Question 10 ***********************\n");
 
     }
 
