@@ -28,7 +28,7 @@ The reason I extract City and Route out from the TrainRoutes is simply decrease 
 
 #### UML Diagram
 
-![](src/main/uml_diagram/UML Diagram.png)
+![](src/main/uml_diagram/UMLDiagram.png)
 
 ### How to run
 
@@ -36,13 +36,15 @@ Please run the project under Java version 7 environment or higher.
 
 After setting up the project in your local IDE or Java Runtime Environment, check out there is a Driver.java. And simply run the main method in this class in IDE or compile all the java files under the /src directory and run java Driver.java on your terminal.
 
+The data of this graph and routes are stored in the /raw_data directory. If you want to add some other cities or routes, please directly append them at the end of both files. The city_list.txt contains city names on each line and graph.txt contains routes on each line which is separated by "\t".
+
 In the Driver class, generateRoutes(), generateCities and constructTrainRoutes() are to initialize the TrainRoutes object. And the rest part of main() is for testing.
 
 ### About Testing
 
 * For Q1-5, I designed 10 different test cases, valid or invalid, to check both the correctnes of the algorithm, the exception handling and the correctness of regular expression match.
 * For Q6 - Q10: In Q6, I designed 4 test cases including two valid input and one non-existed city input and one invalid numeric input. For each method will handle this two kinds of exception first, so in other question test, I just skip this kind of exception test. And other questions tests are similar.
-* About exception handling, at first I just throw the exception and the program will stop immediately. For the consistency of the test program in Driver, instead, I convert all the exceptions from throwing to handing in the method. So if there is any exception handled by the method, some message will be printed on the console, but you could possibly see some meaningless sentence printed, please just ignore them.
+* About exception handling, at first I just throw the exception and the program will stop immediately. For the consistency of the test program in Driver, instead, I convert all the exceptions from throwing to handing in the method. So if there is any exception handled by the method, some message will be printed on the console, but you could possibly see some redundant sentences printed, please just ignore them.
 
 
 
