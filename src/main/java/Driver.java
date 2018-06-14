@@ -1,5 +1,8 @@
 package main.java;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -196,29 +199,58 @@ public class Driver {
         CityFactory cityFactory = new CityFactory();
         RouteFactory routeFactory = new RouteFactory();
 
+        // read City list from city_list.txt
         List<City> cities = new ArrayList<>();
-        City A = cityFactory.createCity("A");
-        City B = cityFactory.createCity("B");
-        City C = cityFactory.createCity("C");
-        City D = cityFactory.createCity("D");
-        City E = cityFactory.createCity("E");
-        cities.add(A);
-        cities.add(B);
-        cities.add(C);
-        cities.add(D);
-        cities.add(E);
+        try {
+            BufferedReader br1 = new BufferedReader(new FileReader("src/main/raw_data/city_list.txt"));
+            String cityLine;
+            while ((cityLine = br1.readLine()) != null) {
+                cities.add(cityFactory.createCity(cityLine.trim()));
+            }
+            br1.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
+        // read graph from graph.txt and generate routeList
         List<Route> routeList = new ArrayList<>();
-        routeList.add(routeFactory.createRoute(A, B, 5));
-        routeList.add(routeFactory.createRoute(B, C, 4));
-        routeList.add(routeFactory.createRoute(C, D, 8));
-        routeList.add(routeFactory.createRoute(D, C, 8));
-        routeList.add(routeFactory.createRoute(D, E, 6));
-        routeList.add(routeFactory.createRoute(A, D, 5));
-        routeList.add(routeFactory.createRoute(C, E, 2));
-        routeList.add(routeFactory.createRoute(E, B, 3));
-        routeList.add(routeFactory.createRoute(A, E, 7));
+        try {
+            BufferedReader br2 = new BufferedReader(new FileReader("src/main/raw_data/graph.txt"));
+            String routeLine;
+            while ((routeLine = br2.readLine()) != null) {
+                String[] tokens = routeLine.trim().split("\t");
+                City one = cityFactory.createCity(tokens[0]);
+                City two = cityFactory.createCity(tokens[1]);
+                int distance = Integer.parseInt(tokens[2]);
+                routeList.add(routeFactory.createRoute(one, two, distance));
+            }
+            br2.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
+        /*                              version1 read data from the main()                                */
+//        City A = cityFactory.createCity("A");
+//        City B = cityFactory.createCity("B");
+//        City C = cityFactory.createCity("C");
+//        City D = cityFactory.createCity("D");
+//        City E = cityFactory.createCity("E");
+//        cities.add(A);
+//        cities.add(B);
+//        cities.add(C);
+//        cities.add(D);
+//        cities.add(E);
+
+//        routeList.add(routeFactory.createRoute(A, B, 5));
+//        routeList.add(routeFactory.createRoute(B, C, 4));
+//        routeList.add(routeFactory.createRoute(C, D, 8));
+//        routeList.add(routeFactory.createRoute(D, C, 8));
+//        routeList.add(routeFactory.createRoute(D, E, 6));
+//        routeList.add(routeFactory.createRoute(A, D, 5));
+//        routeList.add(routeFactory.createRoute(C, E, 2));
+//        routeList.add(routeFactory.createRoute(E, B, 3));
+//        routeList.add(routeFactory.createRoute(A, E, 7));
+        /*                              version1 read data from the main()                                */
         return routeList;
     }
 
